@@ -30,7 +30,7 @@ def index():
     countdown = get_countdown()
 
     db = get_db()
-    comments = db.execute("SELECT * FROM entries LIMIT 10").fetchall()
+    comments = db.execute("SELECT * FROM comments LIMIT 10").fetchall()
     return render_template('index.html', countdown=countdown, comments=comments)
 
 
@@ -42,12 +42,11 @@ def new_comment():
 
 @app.route('/new_comment', methods=['POST'])
 def post_comment():
-
     db = get_db()
     db.execute(
-        "INSERT INTO entries (writer, content) VALUES (?, ?)",
+        "INSERT INTO comments (writer, content) VALUES (?, ?)",
         (request.form['writer'], request.form['content'])
-        )
+    )
     db.commit()
 
     return redirect(url_for('index'))
