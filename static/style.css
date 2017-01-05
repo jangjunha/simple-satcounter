@@ -1,0 +1,108 @@
+body {
+    background-color: #f4f4f4;
+}
+
+.header {
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 16px #ddd;
+}
+
+.header > h1 {
+    background-color: white;
+    padding: 0 8px;
+    color: #444;
+}
+
+.header > h1 > img {
+    width: 64px;
+    height: 64px;
+    vertical-align: middle;
+}
+
+.header nav {
+    border-top: 1px solid #ddd;
+    padding: 0 8px;
+}
+
+.header nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.header nav ul > li {
+    display: inline-block;
+}
+
+.header nav ul > li > a {
+    padding: 8px 16px;
+    color: #666;
+    text-decoration: none;
+}
+
+.header nav ul > li > a:hover {
+    background-color: #eee;
+}
+
+.footer {
+    margin-top: 16px;
+    border-top: 1px solid #ccc;
+    padding: 8px 16px;
+    color: #888;
+}
+
+h3 {
+    margin: 16px 4px 0 4px;
+    padding: 8px;
+    font-size: 16pt;
+    color: #444;
+}
+
+.comments {
+    list-style: none;
+    margin: 2px;
+    padding: 4px 16px;
+    background-color: white;
+}
+
+.comments > li {
+    margin: 0;
+    padding: 18px 12px;
+    /*border: 1px solid #ddd;*/
+    /*box-shadow: 0 0 16px #ddd;*/
+}
+
+.comments > li:not(:nth-child(1)) {
+    border-top: 1px solid #ddd;
+}
+
+.comments > li .writer {
+    margin: 8px 0;
+}
+
+.comments > li .content {
+    margin: 8px 0;
+}
+
+input[type=text], textarea {
+    margin: 4px 16px;
+    min-width: 480px;
+    font-size: 14pt;
+    padding: 12px;
+    border: 1px solid #eee;
+}
+
+input[type=submit] {
+    margin: 4px 16px;
+    font-size: 14pt;
+    width: 120px;
+    padding: 12px;
+    border: none;
+    background-color: #aaa;
+    color: white;
+}
+
+input[type=submit]:hover {
+    background-color: #999;
+    cursor: pointer;
+}

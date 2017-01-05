@@ -17,17 +17,19 @@ comments = [
 ]
 
 
+def get_countdown():
+    return datetime(2017, 11, 16) - datetime.now()
+
 @app.route('/')
 def index():
-    countdown = datetime(2017, 11, 16) - datetime.now()
-    dday = countdown.days
-
-    return render_template('index.html', countdown=dday, comments=comments)
+    countdown = get_countdown()
+    return render_template('index.html', countdown=countdown, comments=comments)
 
 
 @app.route('/new_comment')
 def new_comment():
-    return render_template('write.html')
+    countdown = get_countdown()
+    return render_template('write.html', countdown=countdown)
 
 
 @app.route('/new_comment', methods=['POST'])
