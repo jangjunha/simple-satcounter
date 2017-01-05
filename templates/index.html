@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
 	<h3>덧글</h3>
-	<ul>
+	<ul class="comments">
 	{% for comment in comments %}
 		<li>
-			<h4>{{ comment[1] }}:</h4>
-			<p>{{ comment[2] }}</p>
+			<h4 class="writer">{{ comment[1] }}</h4>
+			<p class="content">{{ comment[2] }}</p>
 		</li>
 	{% endfor %}
 	</ul>

@@ -3,18 +3,26 @@
 <head>
 	<meta charset="utf-8">
 	<title>HiHi</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-	<h1>수능일까지 {{ countdown }}</h1>
+    <div class="header">
+        <h1><img src="{{ url_for('static', filename='logo.png') }}" alt="HEEK">수능일까지 {{ countdown.days }}일</h1>
 
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/new_comment">덧글 쓰기</a></li>
-        </ul>
-    </nav>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">첫 화면</a></li>
+                <li><a href="{{ url_for('new_comment') }}">덧글 쓰기</a></li>
+            </ul>
+        </nav>
+    </div>
 
     {% block content %}
     {% endblock %}
+
+    <div class="footer">
+        <p>Copyright 장준하,김희규.&nbsp;&nbsp;&nbsp;&nbsp;Based on <a href="https://github.com/pallets/flask/tree/master/examples/flaskr/flaskr">Flaskr</a>.</p>
+    </div>
 </body>
 </html>

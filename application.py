@@ -2,7 +2,13 @@ from flask import Flask, g, render_template, request, redirect, url_for
 from datetime import datetime
 import sqlite3
 
+
 app = Flask(__name__)
+
+
+def get_countdown():
+    return datetime(2017, 11, 16) - datetime.now()
+
 
 def get_db():
     db = getattr(g, '_database', None)
@@ -11,6 +17,7 @@ def get_db():
         db = g._database = sqlite3.connect("entry.db")
     return db
 
+
 @app.teardown_appcontext
 def close_connection(expn):
     db = getattr(g, '_database', None)
@@ -18,22 +25,19 @@ def close_connection(expn):
         db.close()
 
 
-
-
-
 @app.route('/')
 def index():
-    countdown = datetime(2017, 11, 16) - datetime.now()
-    dday = countdown.days
+    countdown = get_countdown()
 
     db = get_db()
     comments = db.execute("SELECT * FROM entries LIMIT 10").fetchall()
-    return render_template('index.html', countdown=dday, comments=comments)
+    return render_template('index.html', countdown=countdown, comments=comments)
 
 
 @app.route('/new_comment')
 def new_comment():
-    return render_template('write.html')
+    countdown = get_countdown()
+    return render_template('write.html', countdown=countdown)
 
 
 @app.route('/new_comment', methods=['POST'])
