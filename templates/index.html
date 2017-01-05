@@ -4,8 +4,8 @@
 	<ul>
 	{% for comment in comments %}
 		<li>
-			<h4>{{ comment.writer }}:</h4>
-			<p>{{ comment.content }}</p>
+			<h4>{{ comment[1] }}:</h4>
+			<p>{{ comment[2] }}</p>
 		</li>
 	{% endfor %}
 	</ul>
