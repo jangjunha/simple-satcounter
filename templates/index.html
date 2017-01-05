@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+	<h3>덧글</h3>
+	<ul>
+	{% for comment in comments %}
+		<li>
+			<h4>{{ comment.writer }}:</h4>
+			<p>{{ comment.content }}</p>
+		</li>
+	{% endfor %}
+	</ul>
+{% endblock %}
