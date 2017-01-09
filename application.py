@@ -1,5 +1,6 @@
 from flask import Flask, g, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash
 from datetime import datetime
 
 
@@ -7,6 +8,12 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
+
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(255), nullable=False)
 
 
 class Message(db.Model):
@@ -47,6 +54,22 @@ def post_comment():
     db.session.add(message)
     db.session.commit()
 
+    return redirect(url_for('index'))
+
+
+@app.route('/signup')
+def signup_form():
+    countdown = get_countdown()
+    return render_template('signup.html', countdown=countdown)
+
+
+@app.route('/signup', methods=['POST'])
+def signup():
+    user = User()
+    user.username = request.form['username']
+    user.password = generate_password_hash(request.form['password'])
+    db.session.add(user)
+    db.session.commit()
     return redirect(url_for('index'))
 
 

@@ -84,7 +84,7 @@ h3 {
     margin: 8px 0;
 }
 
-input[type=text], textarea {
+input[type=text], input[type=password], textarea {
     margin: 4px 16px;
     min-width: 480px;
     font-size: 14pt;

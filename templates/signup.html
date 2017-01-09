@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h3>회원 가입</h3>
+    <form action="{{ url_for('signup') }}" method="post">
+        <input type="text" name="username" placeholder="Username"><br>
+        <input type="password" name="password" placeholder="Password"><br>
+        <input type="submit" value="가입"><br>
+    </form>
+{% endblock %}
