@@ -2,7 +2,6 @@
 {% block content %}
     <h3>덧글 쓰기</h3>
     <form action="{{ url_for('post_comment') }}" method="post">
-        <input type="text" name="writer" placeholder="작성자"><br>
         <textarea name="content" placeholder="내용"></textarea><br>
         <input type="submit" value="작성"><br>
     </form>

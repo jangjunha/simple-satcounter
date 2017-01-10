@@ -1,12 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
-{% if user %}
-    <p>{{ user.username }}님 반갑습니다!</p>
-{% endif %}
-
-	<h3>덧글</h3>
+	<h3>{{ user.username }}님의 프로필</h3>
 	<ul class="comments">
-	{% for comment in comments %}
+	{% for comment in user.messages %}
 		<li>
 			<h4 class="writer">{{ comment.writer.username }}</h4>
 			<p class="content">{{ comment.content }}</p>

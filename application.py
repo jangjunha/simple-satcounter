@@ -1,4 +1,4 @@
-from flask import Flask, g, render_template, request, redirect, url_for, session
+from flask import Flask, g, render_template, request, redirect, url_for, session, abort
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
@@ -16,14 +16,18 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
 
+    messages = db.relationship('Message',
+                               backref=db.backref('writer', lazy='joined'),
+                               lazy='dynamic')
+
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    writer = db.Column(db.String(80), nullable=False)
+    writer_user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     content = db.Column(db.Text, nullable=False)
 
-    def __init__(self, writer, content):
-        self.writer = writer
+    def __init__(self, writer_user_id, content):
+        self.writer_user_id = writer_user_id
         self.content = content
 
     def __repr__(self):
@@ -58,8 +62,17 @@ def index():
         user_id = session['user_id']
         user = User.query.filter_by(id=user_id).one()
 
-    comments = Message.query.order_by('-id').all()
+    comments = Message.query.all()
     return render_template('index.html', comments=comments)
+
+
+@app.route('/users/<int:user_id>')
+def user_profile(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    if not user:
+        return abort(404)
+
+    return render_template('profile.html', user=user)
 
 
 @app.route('/new_comment')
@@ -69,7 +82,10 @@ def new_comment():
 
 @app.route('/new_comment', methods=['POST'])
 def post_comment():
-    message = Message(writer=request.form['writer'],
+    if not g.user:
+        return abort(401)
+
+    message = Message(writer_user_id=g.user.id,
                       content=request.form['content'])
     db.session.add(message)
     db.session.commit()
