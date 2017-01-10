@@ -34,26 +34,37 @@ def get_countdown():
     return datetime(2017, 11, 16) - datetime.now()
 
 
+@app.before_request
+def before_request():
+    ''' 매 요청 전에 실행 '''
+    g.countdown = get_countdown()
+
+    if 'user_id' in session:
+        g.user = User.query.filter_by(id=session['user_id']).one()
+    else:
+        g.user = None
+
+
+@app.teardown_request
+def teardown_request(exception):
+    ''' 매 요청 마지막에 실행 '''
+    pass
+
+
 @app.route('/')
 def index():
-    countdown = get_countdown()
-
     user = None
     if 'user_id' in session:
         user_id = session['user_id']
         user = User.query.filter_by(id=user_id).one()
 
     comments = Message.query.order_by('-id').all()
-    return render_template('index.html',
-                           countdown=countdown,
-                           comments=comments,
-                           user=user)
+    return render_template('index.html', comments=comments)
 
 
 @app.route('/new_comment')
 def new_comment():
-    countdown = get_countdown()
-    return render_template('write.html', countdown=countdown)
+    return render_template('write.html')
 
 
 @app.route('/new_comment', methods=['POST'])
@@ -68,8 +79,7 @@ def post_comment():
 
 @app.route('/signup')
 def signup_form():
-    countdown = get_countdown()
-    return render_template('signup.html', countdown=countdown)
+    return render_template('signup.html')
 
 
 @app.route('/signup', methods=['POST'])
@@ -95,8 +105,7 @@ def login():
             session['user_id'] = user.id
             return redirect(url_for('index'))
 
-    countdown = get_countdown()
-    return render_template('login.html', countdown=countdown, error=error)
+    return render_template('login.html', error=error)
 
 
 @app.route('/logout')

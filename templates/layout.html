@@ -8,14 +8,15 @@
 </head>
 <body>
     <div class="header">
-        <h1><img src="{{ url_for('static', filename='logo.png') }}" alt="HEEK">수능일까지 {{ countdown.days }}일</h1>
+        <h1><img src="{{ url_for('static', filename='logo.png') }}" alt="HEEK">수능일까지 {{ g.countdown.days }}일</h1>
 
         <nav>
             <ul>
                 <li><a href="{{ url_for('index') }}">첫 화면</a></li>
                 <li><a href="{{ url_for('new_comment') }}">덧글 쓰기</a></li>
-                {% if 'user_id' in session %}
+                {% if g.user %}
                 <li><a href="{{ url_for('logout') }}">로그아웃</a></li>
+                <li style='float: right'>{{ g.user.username }}님 환영합니다!</li>
                 {% else %}
                 <li><a href="{{ url_for('signup_form') }}">회원 가입</a></li>
                 <li><a href="{{ url_for('login') }}">로그인</a></li>
