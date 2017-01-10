@@ -14,7 +14,12 @@
             <ul>
                 <li><a href="{{ url_for('index') }}">첫 화면</a></li>
                 <li><a href="{{ url_for('new_comment') }}">덧글 쓰기</a></li>
+                {% if 'user_id' in session %}
+                <li><a href="{{ url_for('logout') }}">로그아웃</a></li>
+                {% else %}
                 <li><a href="{{ url_for('signup_form') }}">회원 가입</a></li>
+                <li><a href="{{ url_for('login') }}">로그인</a></li>
+                {% endif %}
             </ul>
         </nav>
     </div>
